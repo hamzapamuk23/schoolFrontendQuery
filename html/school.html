@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="school.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>  
+    <div class="container">
+        <div class="table-responsive">
+            <h1>Öğrenci Tablosu</h1> <br><br>
+            <table class="table table-bordered table striped" >
+                <thead>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Kodu</th>
+                        <th>Durumu</th>
+                        <th>Operasyonlar</th>
+                    </tr>
+                </thead>
+                <input class="form-control" type="text" id="searchName" onkeyup="inputListening()" placeholder="Okulun Adını Giriniz" required>&nbsp;
+                <input class="form-control" type="text" id="searchCode" onkeyup="inputListening()" placeholder="Okulun Kodunu Giriniz" required>&nbsp;
+                <tbody id="table"></tbody>
+            </table>
+        </div>
+    </div>
+    <form style="margin-left: 500px;" id="form" onsubmit="saveBtnSchool()" >
+        <input type="text" id="formId" value="" style="display: none;">
+        <input type="text" id="formName" placeholder="OkulAdı" required>
+        <input type="text" id="formCode" placeholder="OkulunCodu" required>
+        <input type="checkbox" id=formActive checked="false"/>
+        <label for="formActive">Aktif</label>
+        <input type="submit" id="saveBtn" value="Kaydet" class="btn btn-success">
+         <button id="cleanBtn" onclick="cleanInput()" type="button" class="btn btn-primary" style="display: inline-block;">Temizle </button>
+        
+    </form>
+    
+    <script src="/js/school.js"></script>
+    
+</body>
+</html>

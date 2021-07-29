@@ -1,0 +1,24 @@
+
+#searchCode{
+    margin-left: -6px;
+    width: 155px;
+    margin-top: 0px;
+    border: 1px solid black;
+    padding: 0px;
+    display: inline-block
+}
+#searchName{
+    border: 1px solid black;
+    width: 360px;
+    display: inline-block
+}
+#searchActive{
+    border: 1px solid black;
+    width: 220px;
+    display: inline-block
+}
+h1{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    padding-top: 20px;
+}

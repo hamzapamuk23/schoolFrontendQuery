@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="student.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <div class="table-responsive">
+            <h1>Öğrenci Tablosu</h1> <br><br>
+            <table class="table table-bordered table striped" >
+                <thead>
+                    <tr>
+                        <th>Adı</th>
+                        <th>Soyadı</th>
+                        <th>Numarası</th>
+                        <th>Yaşı</th>
+                        <th>Ortalaması</th>
+                        <th>Okul Adı</th>
+                        <th>Operasyonlar</th>
+                    </tr>
+                </thead>
+                <br>    
+                <input class="form-control" type="text" id="searchName" onkeyup="inputListening()" placeholder="Adı" required>
+                <input class="form-control" type="text" id="searchSurname" onkeyup="inputListening()" placeholder="Soyadı" required>
+                <input class="form-control" type="text" id="searchNumber" onkeyup="inputListening()" placeholder="Numarası" required>
+                <input class="form-control" type="text" id="searchAge" onkeyup="inputListening()" placeholder="Yaşı" required>
+                <input class="form-control" type="text" id="searchGpa" onkeyup="inputListening()" placeholder="Ortalaması" required>
+                <input class="form-control" type="text" id="searchSchool" onkeyup="inputListening()" placeholder="Okulu" required>
+                <tbody id="table"></tbody>
+            </table>
+        </div>  
+    </div>
+    <br> <br>
+    <div class="container">
+    <form id="form" onsubmit="saveBtnSchool(event)">
+        <div class="form row">
+            <div class="form-group col-md-12" style="margin-left: 209px;">
+                <input type="text" id="formId" value="" style="display: none;" disabled > 
+                <input type="text" id="formName" placeholder="Adı"  required>&nbsp;
+                <input type="text" id="formSurname" placeholder="Soyadı"  required>&nbsp;
+                <input type="text" id="formNumber" placeholder="Numarası"  required><br>
+                <input type="text" id="formAge" required placeholder="Yaşı">&nbsp;
+                <input type="text" id="formGpa" placeholder="Ortalaması"  required>&nbsp;
+                <select id="schoolBox">
+                </select>
+            </div>
+            <br><br><br>
+            <div style="margin-left: 432px;">
+                <input type="submit" value="Kaydet" class="btn btn-success">
+                <button id="cleanBtn" onclick="cleanInput()" type="button" class="btn btn-primary">Temizle</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script src="/js/student.js"></script>
+</body>
+</html>
