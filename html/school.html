@@ -12,7 +12,7 @@
 <body>  
     <div class="container">
         <div class="table-responsive">
-            <h1>Öğrenci Tablosu</h1> <br><br>
+            <h1>Okul Tablosu</h1> <br><br>
             <table class="table table-bordered table striped" >
                 <thead>
                     <tr>
@@ -21,10 +21,20 @@
                         <th>Durumu</th>
                         <th>Operasyonlar</th>
                     </tr>
+                    <tr>
+                        <td> <input class="form-control" style="height: 30px;" type="text" id="searchName" onkeyup="inputListening()" placeholder="Okulun Adını Giriniz" required></td>
+                        <td><input class="form-control" style="height: 30px;" type="text" id="searchCode" onkeyup="inputListening()" placeholder="Okulun Kodunu Giriniz" required></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </thead>
-                <input class="form-control" type="text" id="searchName" onkeyup="inputListening()" placeholder="Okulun Adını Giriniz" required>&nbsp;
-                <input class="form-control" type="text" id="searchCode" onkeyup="inputListening()" placeholder="Okulun Kodunu Giriniz" required>&nbsp;
                 <tbody id="table"></tbody>
+                <tr>
+                    <td colspan="7">
+                        <button id="nextBtn" onclick="changePage(event)" type="button" class="btn btn-primary float-right mx-md-2">></button>
+                        <button id="prevBtn" onclick="changePage(event)" type="button" class="btn btn-primary float-right mx-md-2" ><</button>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -35,7 +45,7 @@
         <input type="checkbox" id=formActive checked="false"/>
         <label for="formActive">Aktif</label>
         <input type="submit" id="saveBtn" value="Kaydet" class="btn btn-success">
-         <button id="cleanBtn" onclick="cleanInput()" type="button" class="btn btn-primary" style="display: inline-block;">Temizle </button>
+        <button id="cleanBtn" onclick="cleanInput()" type="button" class="btn btn-primary" style="display: inline-block;">Temizle </button>
         
     </form>
     

@@ -1,9 +1,10 @@
 var studentList=[]
 var studentObj = {name: '', surname: '', number:'', age:'', gpa:'', school: ''}
-getListStudent()
+
+getStudentList()
 getCheckboxSchool()
 
-function getListStudent() {
+function getStudentList() {
     
     $.getJSON("http://localhost:8080/student/search/findAllSearch?name="+studentObj.name+"&surname="+studentObj.surname+"&number="+studentObj.number+"&age="+studentObj.age+"&gpa="+studentObj.gpa+"&schoolName="+studentObj.school).done(function( data ) {
         studentList=data._embedded.students
@@ -17,7 +18,7 @@ function getListStudent() {
             studentTable+="<td>"+val.gpa+"</td>"
             if (val.school==null) {studentTable+="<td></td>"}
             else{studentTable+="<td>" +val.school.name+"</td>"}
-            studentTable+="<td><button type='button' class='btn btn-danger' onclick='deleteStudent("+key+")' >Sil</button>&nbsp&nbsp<button type='button' class='btn btn-primary' onclick='inputUpdate("+key+")' >Güncelle</button></td></tr>"
+            studentTable+="<td><button type='button' class='btn btn-danger' onclick='deleteStudent("+val.id+")' >Sil</button>&nbsp&nbsp<button type='button' class='btn btn-primary' onclick='inputUpdate("+key+")' >Güncelle</button></td></tr>"
         });
         $("#table").html(studentTable)  
     })
@@ -25,18 +26,22 @@ function getListStudent() {
 
 function addStudent() {
     var student={name:$("#formName").val(),surname:$("#formSurname").val(),number:$("#formNumber").val(),
-    age:$("#formAge").val(),gpa:$("#formGpa").val(),school:{id:$("#schoolBox").val()}}
-    if($("#schoolBox").val()=="Seçiniz"){
-        var student={name:$("#formName").val(),surname:$("#formSurname").val(),number:$("#formNumber").val(),
-    age:$("#formAge").val(),gpa:$("#formGpa").val()}
-    }
+    age:$("#formAge").val(),gpa:$("#formGpa").val(), school: null}
+    student.school = $("#schoolBox")[0].selectedIndex == 0 ? null : {id:$("#schoolBox").val()}
+    // if($("#schoolBox").val()=="Seçiniz"){
+    //     var student={name:$("#formName").val(),surname:$("#formSurname").val(),number:$("#formNumber").val(),
+    // age:$("#formAge").val(),gpa:$("#formGpa").val()}
+    // }
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/student",
         data: JSON.stringify(student),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function(data){alert("Başarıyla Eklendi");getListStudent()},
+        success: function(data){
+            alert("Başarıyla Eklendi")
+            getStudentList()
+        },
         error: function(errMsg) {
             alert(errMsg);
         }
@@ -50,21 +55,27 @@ function inputUpdate(index) {
     $("#formNumber").val(studentList[index].number)
     $("#formAge").val(studentList[index].age)
     $("#formGpa").val(studentList[index].gpa)
-    schoolIndex = ( schoolList.findIndex(school => school.id === studentList[index].school.id) + 1)
-    $("#schoolBox")[0].selectedIndex = schoolIndex
+    $("#schoolBox")[0].selectedIndex = studentList[index].school != null ? schoolList.findIndex(school => school.id === studentList[index].school.id) + 1 : 0
+    
+    // if(studentList[index].school!=null){
+    //     schoolIndex = ( schoolList.findIndex(school => school.id === studentList[index].school.id) + 1)
+    //     $("#schoolBox")[0].selectedIndex = schoolIndex
+    // }
+    // else{$("#schoolBox")[0].selectedIndex=0}
 }
 
 function updateStudent() {
-    id=parseInt($("#formId").val())
-    var student={id:id,name:$("#formName").val(),surname:$("#formSurname").val(),number:$("#formNumber").val(),
-    age:$("#formAge").val(),gpa:$("#formGpa").val(),school:{id:$("#schoolBox").val()}}
+    var student={id:parseInt($("#formId").val()),name:$("#formName").val(),surname:$("#formSurname").val(),number:$("#formNumber").val(),age:$("#formAge").val(),gpa:$("#formGpa").val()}
+    student.school = $("#schoolBox")[0].selectedIndex == 0 ? null : {id:$("#schoolBox").val()}
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/student/"+id,
+        url: "http://localhost:8080/student/"+student.id,
         data: JSON.stringify(student),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        success: function(data){alert("Başarıyla Güncellendi");getListStudent()},
+        success: function(data){
+            alert("Başarıyla Güncellendi")
+            getStudentList()},
         error: function(errMsg) {
             alert(errMsg);
         }
@@ -82,14 +93,16 @@ function saveBtnStudent() {
     }
 }
 
-function deleteStudent(index) {
+function deleteStudent(id) {
     var result=confirm("Silmek İstediğinizden Eminmisiniz?")
     if (result) {
-        url=studentList[index]._links.self.href
         $.ajax({
             type: "DELETE",
-            url: url, 
-            success: function(data){getListStudent()},
+            url: "http://localhost:8080/student/"+id, 
+            success: function(data){
+                cleanInput()
+                getStudentList()
+            },
             error: function(errMsg) {
                 alert(errMsg);
             }
@@ -110,7 +123,7 @@ function getCheckboxSchool() {
 }
 function inputListening() {
     studentObj = {name: $("#searchName").val(), surname: $("#searchSurname").val(), number:$("#searchNumber").val(), age:$("#searchAge").val(), gpa: $("#searchGpa").val(), school: $("#searchSchool").val()}
-    getListStudent()
+    getStudentList()
 }
 
 function cleanInput(){
